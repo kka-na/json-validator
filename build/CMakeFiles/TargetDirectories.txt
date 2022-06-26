@@ -1,4 +1,0 @@
-/home/kana/Documents/Project/json-validator/build/CMakeFiles/rebuild_cache.dir
-/home/kana/Documents/Project/json-validator/build/CMakeFiles/json-validator.dir
-/home/kana/Documents/Project/json-validator/build/CMakeFiles/edit_cache.dir
-/home/kana/Documents/Project/json-validator/build/CMakeFiles/json-validator_autogen.dir
