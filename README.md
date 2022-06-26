@@ -51,4 +51,4 @@ make
 ## UI
 
 <p align="center">
-  <img width="300" src="../src/forms/mainwindow.png">
+  <img width="300" src="./src/forms/mainwindow.png">
