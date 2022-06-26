@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 cmake_policy(SET CMP0104 OLD)
 project(json-validator LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_FLAGS         "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g")
@@ -25,20 +25,22 @@ pkg_check_modules(JSONCPP jsoncpp)
 include_directories(${JSONCPP_INCLUDE_DIRS})
 link_libraries(${JSONCPP_LIBRARIES})
 
+# Import installed valijson and link it to your executable
+find_package(valijson REQUIRED)
 
 include_directories(src src/resource src/forms src/headers src/sources)
 
 set(HEADERS
     src/headers/mainwindow.h
     #src/headers/aboutwindow.h
-    src/headers/validator.h
+    src/headers/jsonValidator.h
 )
 
 set(SOURCE_json-validator
     src/sources/mainwindow.cpp
     #src/sources/aboutwindow.cpp
     src/sources/main.cpp 
-    src/sources/validator.cpp
+    src/sources/jsonValidator.cpp
 )
 
 qt5_wrap_cpp(HEADER_json-validator ${HEADERS})
@@ -53,5 +55,7 @@ add_executable(json-validator
 
 target_link_libraries(json-validator 
     jsoncpp
+    valijson
     Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts Qt5::OpenGL
 ) 
+

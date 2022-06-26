@@ -2,14 +2,13 @@
 #define MAINWINDOW_H
 
 #include "ui_mainwindow.h"
-#include "validator.h"
+#include "jsonValidator.h"
 
 #include <string>
 
 #include <QMainWindow>
 #include <QObject>
 #include <QLabel>
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -28,8 +27,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    class Validator::Validator *validator;
+    class JsonValidator::JsonValidator *validator;
 
 private:
+    void setFunction();
+
+private slots:
+    void setOpen();
+    void setResult(bool);
 };
 #endif // MAINWINDOW_H

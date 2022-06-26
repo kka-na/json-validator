@@ -1,0 +1,13 @@
+-I/home/kana/Documents/Project/json-validator
+-I/home/kana/Documents/Project/json-validator/build
+-I/usr/include/jsoncpp
+-I/home/kana/Documents/Project/json-validator/src
+-I/home/kana/Documents/Project/json-validator/src/resource
+-I/home/kana/Documents/Project/json-validator/src/forms
+-I/home/kana/Documents/Project/json-validator/src/headers
+-I/home/kana/Documents/Project/json-validator/src/sources
+-I/home/kana/Documents/Project/json-validator
+-I/home/kana/Documents/Project/json-validator/build
+-o
+/home/kana/Documents/Project/json-validator/build/src/headers/moc_validator.cpp
+/home/kana/Documents/Project/json-validator/src/headers/validator.h
