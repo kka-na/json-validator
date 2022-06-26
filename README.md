@@ -47,3 +47,8 @@ ccmake -DQt5_DIR=$(brew --prefix qt5)/lib/cmake/Qt5 ..
 cmake ..
 make
 ```
+
+## UI
+
+<p align="center">
+  <img width="300" src="../src/forms/mainwindow.png">
