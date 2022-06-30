@@ -51,4 +51,4 @@ make
 ## UI
 
 <p align="center">
-  <img width="500" src="./test/test2.gif">
+  <img width="800" src="./test/test2.gif">
