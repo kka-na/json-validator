@@ -38,16 +38,35 @@ void JsonValidator::setOpen()
 void JsonValidator::setStart()
 {
     Validator validator;
+    bool status = true;
+    int error_cnt = 0;
+
     for (int i = 0; i < data_list.size(); i++)
     {
         cur_data_path = string(data_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(i)).toLocal8Bit().constData());
+
         rapidjson::Document myTargetDoc;
+        // If Target File Structure is Wrong,
         if (!valijson::utils::loadDocument(cur_data_path, myTargetDoc))
         {
-            throw std::runtime_error("Failed to load target document");
+            status = false;
+            error_cnt += 1;
+            error_data_list << data_list.at(i);
+            continue;
         }
 
         RapidJsonAdapter myTargetAdapter(myTargetDoc);
-        emit sendResult(validator.validate(mySchema, myTargetAdapter, NULL));
+        // If Validation Failed,
+        if (!validator.validate(mySchema, myTargetAdapter, NULL))
+        {
+            status = false;
+            error_cnt += 1;
+            error_data_list << data_list.at(i);
+        }
     }
+
+    double error_rate = double(double(error_cnt) / double(data_list.size())) * double(100);
+
+    emit sendResult(status);
+    emit sendErrorRate(error_rate);
 }

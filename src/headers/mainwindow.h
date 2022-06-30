@@ -35,5 +35,7 @@ private:
 private slots:
     void setOpen();
     void setResult(bool);
+    void setErrorRate(double);
+    void setReset();
 };
 #endif // MAINWINDOW_H

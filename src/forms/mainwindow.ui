@@ -6,21 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
+    <width>481</width>
     <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>json-validator</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resource/resources.qrc">
+    <normaloff>:/png/icon.png</normaloff>:/png/icon.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="openButton">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>50</x>
       <y>10</y>
-      <width>120</width>
-      <height>30</height>
+      <width>113</width>
+      <height>32</height>
      </rect>
     </property>
     <property name="text">
@@ -30,10 +34,10 @@
    <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>180</x>
       <y>10</y>
-      <width>120</width>
-      <height>30</height>
+      <width>121</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -44,10 +48,18 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>560</y>
+      <y>320</y>
       <width>461</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu Condensed</family>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Result</string>
@@ -62,8 +74,79 @@
       <x>10</x>
       <y>50</y>
       <width>461</width>
-      <height>501</height>
+      <height>261</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="erLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>360</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu Condensed</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Error Rate :</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="errorRateLabel">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>360</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu Condensed</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>0 %</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>400</y>
+      <width>461</width>
+      <height>191</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="resetButton">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>10</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
     </property>
    </widget>
   </widget>
@@ -72,7 +155,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>480</width>
+     <width>481</width>
      <height>22</height>
     </rect>
    </property>
@@ -85,6 +168,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

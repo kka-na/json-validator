@@ -45,7 +45,7 @@ set(SOURCE_json-validator
 
 qt5_wrap_cpp(HEADER_json-validator ${HEADERS})
 qt5_wrap_ui(UI_json-validator src/forms/mainwindow.ui src/forms/aboutwindow.ui) 
-#qt5_add_resources(RESOURCES src/resource/resources.qrc)
+qt5_add_resources(RESOURCES src/resource/resources.qrc)
 
 add_executable(json-validator 
     ${SOURCE_json-validator} 

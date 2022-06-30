@@ -12,6 +12,7 @@
 #include <valijson/utils/rapidjson_utils.hpp>
 #include <valijson/schema.hpp>
 #include <valijson/schema_parser.hpp>
+
 using valijson::Schema;
 using valijson::SchemaParser;
 using valijson::adapters::RapidJsonAdapter;
@@ -26,6 +27,7 @@ public:
 
     QString data_dir;
     QStringList data_list;
+    QStringList error_data_list;
     void setOpen();
 
 private:
@@ -36,6 +38,7 @@ private:
 
 signals:
     void sendResult(bool);
+    void sendErrorRate(double);
 
 private slots:
     void setStart();
