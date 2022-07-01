@@ -12,7 +12,7 @@
         "Gps": "",
         "Weather": "비"
     },
-    "Annotation": [
+    "Annotation": 
         {
             "Label": "road",
             "Type": "polygon",

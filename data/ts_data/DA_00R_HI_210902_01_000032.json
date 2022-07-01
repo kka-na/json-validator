@@ -7,7 +7,7 @@
             1080
         ],
         "Copyrighter": "(주)미디어그룹사람과숲",
-        "Time_zone": "주간",
+        "Time_zone": 1,
         "Location": "고속도로",
         "Gps": "",
         "Weather": "비"
@@ -34,6 +34,7 @@
                 ],
                 [
                     127.76,
+                    921.15,
                     921.15
                 ],
                 [
@@ -6497,7 +6498,7 @@
                     463.44
                 ]
             ],
-            "Data_type": "worker"
+            "Data_type": 1
         },
         {
             "Label": "lane",

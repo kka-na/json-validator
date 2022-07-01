@@ -8,7 +8,7 @@
             "properties":{
                 "Image_name":{"type":"string"},
                 "Image_path":{"type":"string"},
-                "Resolution":{"type":"array", "items":{"type":"integer"}},
+                "Resolution":{"type":"array", "items":{"type":"integer"}, "maxItems":2},
                 "Copyrighter":{"type":"string"},
                 "Time_zone":{"type":"string"},
                 "Location":{"type":"string"},
@@ -23,9 +23,9 @@
                 "properties":{
                     "Label":{"type":"string"},
                     "Type":{"type":"string"},
-                    "bbox":{"type":"array", "items":{"type":"number"}},
+                    "bbox":{"type":"array", "items":{"type":"number"}, "maxItems":4},
                     "area":{"type":"number"},
-                    "Coordinate":{"type":"array", "items":{"type":"array", "items":{"type":"number"}}},
+                    "Coordinate":{"type":"array", "items":{"type":"array", "items":{"type":"number"}, "maxItems":2}},
                     "Data_type":{"type":"string"}
                 }
             }
