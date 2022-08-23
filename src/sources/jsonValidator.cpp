@@ -4,8 +4,8 @@
 #include "jsoncpp/json/json.h"
 #include <fstream>
 
-#include <QDir>
 #include <QChar>
+#include <QDebug>
 
 #include <valijson/validator.hpp>
 #include <valijson/validation_results.hpp>
@@ -25,11 +25,18 @@ JsonValidator::~JsonValidator()
 
 void JsonValidator::setOpen()
 {
-    QDir data_qdir(data_dir);
-    data_list = data_qdir.entryList(QStringList() << "*.json");
+    top_qdir = QDir(top_dir);
+    top_dir_list = top_qdir.entryList(QDir::NoDot | QDir::NoDotDot | QDir::Dirs);
+    for (int i = 0; i < top_dir_list.size(); i++)
+    {
+        QString data_dir = top_qdir.filePath(top_dir_list.at(i));
+        QDir data_qdir(data_dir);
+        QStringList data_list = data_qdir.entryList(QStringList() << "*.json");
+        whole_data_list << top_dir_list.at(i);
+        whole_data_list << data_list;
+    }
 
-    string scheme_data = string(data_dir.toLocal8Bit().constData()) + string("/scheme/scheme.json");
-
+    string scheme_data = !type ? "../data/scheme/2dscheme.json" : "../data/scheme/2d3dscheme.json";
     vector<string> load_result;
     if (!valijson::utils::loadDocument(scheme_data, mySchemaDoc, load_result))
     {
@@ -40,73 +47,99 @@ void JsonValidator::setOpen()
     parser.populateSchema(mySchemaAdapter, mySchema);
 }
 
+void JsonValidator::getLine(std::string path, int beg, int end)
+{
+    ifstream file(path.c_str());
+
+    file.seekg(beg, ios::beg);
+    int length = end;
+
+    char *buffer = new char[length];
+    file.read(buffer, length);
+
+    buffer[length - 1] = '\0';
+
+    cout << buffer << endl;
+    delete[] buffer;
+}
+
 void JsonValidator::setStart()
 {
     Validator validator;
     bool status = true;
     int error_cnt = 0;
-
-    for (int i = 0; i < data_list.size(); i++)
+    double whole_data_list_size = 0;
+    for (int i = 0; i < top_dir_list.size(); i++)
     {
-        cur_data_path = string(data_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(i)).toLocal8Bit().constData());
+        QString data_dir = top_qdir.filePath(top_dir_list.at(i));
+        QDir data_qdir(data_dir);
+        QStringList data_list = data_qdir.entryList(QStringList() << "*.json");
+        whole_data_list_size += data_list.size();
 
-        // If Target File Structure is Wrong,
-        rapidjson::Document myTargetDoc;
-        vector<string> load_result;
-        if (!valijson::utils::loadDocument(cur_data_path, myTargetDoc, load_result))
+        for (int j = 0; j < data_list.size(); j++)
         {
-            int pos = data_list.at(i).lastIndexOf(QChar('.'));
-            string err_result_path = string(data_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(i).left(pos)).toLocal8Bit().constData()) + "_error.txt";
-            ofstream writeFile;
-            writeFile.open(err_result_path.c_str());
-            for (int i = 0; i < int(load_result.size()); i += 2)
+            string cur_data_path = data_qdir.filePath(data_list.at(j)).toLocal8Bit().constData();
+
+            // If Target File Structure is Wrong,
+            rapidjson::Document myTargetDoc;
+            vector<string> load_result;
+            if (!valijson::utils::loadDocument(cur_data_path, myTargetDoc, load_result))
             {
-                writeFile << "Error #" << load_result[i] << "\n";
-                writeFile << " ";
-                writeFile << "  - " << load_result[i + 1] << "\n";
-            }
 
-            writeFile.close();
-            status = false;
-            error_cnt += 1;
-            error_data_list << data_list.at(i);
-            continue;
-        }
-
-        // If Validation Failed,
-        RapidJsonAdapter myTargetAdapter(myTargetDoc);
-        ValidationResults err_results;
-        if (!validator.validate(mySchema, myTargetAdapter, &err_results))
-        {
-            int pos = data_list.at(i).lastIndexOf(QChar('.'));
-            string err_result_path = string(data_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(i).left(pos)).toLocal8Bit().constData()) + "_error.txt";
-
-            ofstream writeFile;
-            writeFile.open(err_result_path.c_str());
-
-            ValidationResults::Error error;
-            unsigned int errorNum = 1;
-            while (err_results.popError(error))
-            {
-                writeFile << "Error #" << errorNum << "\n";
-                writeFile << " ";
-                for (const string &contextElement : error.context)
+                int pos = data_list.at(j).lastIndexOf(QChar('.'));
+                string err_result_path = string(data_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(j).left(pos)).toLocal8Bit().constData()) + "_error.txt";
+                ofstream writeFile;
+                writeFile.open(err_result_path.c_str());
+                for (int k = 0; k < int(load_result.size()); k += 3)
                 {
-                    writeFile << contextElement << " ";
+                    writeFile << "Error #" << load_result[k] << "\n";
+                    writeFile << "Offset : " << load_result[k + 1] << "\n";
+                    // getLine(cur_data_path, stoi(load_result[k + 1]), stoi(load_result[k + 1]) + 40);
+                    writeFile << "  - " << load_result[k + 2] << "\n";
                 }
-                writeFile << "\n";
-                writeFile << "   - " << error.description << "\n";
-                ++errorNum;
+
+                writeFile.close();
+                status = false;
+                error_cnt += 1;
+                error_data_list << data_list.at(j);
+                continue;
             }
 
-            writeFile.close();
-            status = false;
-            ++error_cnt;
-            error_data_list << data_list.at(i);
+            // If Validation Failed,
+            RapidJsonAdapter myTargetAdapter(myTargetDoc);
+            ValidationResults err_results;
+            if (!validator.validate(mySchema, myTargetAdapter, &err_results))
+            {
+                int pos = data_list.at(j).lastIndexOf(QChar('.'));
+                string err_result_path = string(data_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(j).left(pos)).toLocal8Bit().constData()) + "_error.txt";
+
+                ofstream writeFile;
+                writeFile.open(err_result_path.c_str());
+
+                ValidationResults::Error error;
+                unsigned int errorNum = 1;
+                while (err_results.popError(error))
+                {
+                    writeFile << "Error #" << errorNum << "\n";
+                    writeFile << " ";
+                    for (const string &contextElement : error.context)
+                    {
+                        writeFile << contextElement << " ";
+                    }
+                    writeFile << "\n";
+                    writeFile << "   - " << error.description << "\n";
+                    ++errorNum;
+                }
+
+                writeFile.close();
+                status = false;
+                ++error_cnt;
+                error_data_list << data_list.at(j);
+            }
         }
     }
 
-    double error_rate = double(double(error_cnt) / double(data_list.size())) * double(100);
+    double error_rate = double(double(error_cnt) / whole_data_list_size) * double(100);
 
     emit sendResult(status);
     emit sendErrorRate(error_rate);

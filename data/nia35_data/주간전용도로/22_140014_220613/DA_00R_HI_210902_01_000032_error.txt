@@ -1,0 +1,33 @@
+Error #1
+ <root> [Annotation] [0] [Coordinate] [2] 
+   - Array should contain no more than 2 elements.
+Error #2
+ <root> [Annotation] [0] [Coordinate] 
+   - Failed to validate item #2 in array.
+Error #3
+ <root> [Annotation] [0] 
+   - Failed to validate against schema associated with property name 'Coordinate'.
+Error #4
+ <root> [Annotation] 
+   - Failed to validate item #0 in array.
+Error #5
+ <root> [Annotation] [58] [Data_type] 
+   - Value type not permitted by 'type' constraint.
+Error #6
+ <root> [Annotation] [58] 
+   - Failed to validate against schema associated with property name 'Data_type'.
+Error #7
+ <root> [Annotation] 
+   - Failed to validate item #58 in array.
+Error #8
+ <root> 
+   - Failed to validate against schema associated with property name 'Annotation'.
+Error #9
+ <root> [Source_Image_Info] [Time_zone] 
+   - Value type not permitted by 'type' constraint.
+Error #10
+ <root> [Source_Image_Info] 
+   - Failed to validate against schema associated with property name 'Time_zone'.
+Error #11
+ <root> 
+   - Failed to validate against schema associated with property name 'Source_Image_Info'.

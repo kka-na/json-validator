@@ -10,6 +10,7 @@
 #include <QDir>
 #include <QStringList>
 #include <QRadioButton>
+#include <QGroupBox>
 
 using namespace std;
 
@@ -36,9 +37,10 @@ void MainWindow::setFunction()
 
 void MainWindow::setOpen()
 {
-	validator->data_dir = QFileDialog::getExistingDirectory(this, "Select Top Directory of JSON files", QDir::currentPath(), QFileDialog::ShowDirsOnly);
+	validator->type = ui->ssRadioButton->isChecked() ? 0 : 1;
+	validator->top_dir = QFileDialog::getExistingDirectory(this, "Select Top Directory of JSON files", QDir::currentPath(), QFileDialog::ShowDirsOnly);
 	validator->setOpen();
-	ui->listWidget->addItems(validator->data_list);
+	ui->listWidget->addItems(validator->whole_data_list);
 }
 
 void MainWindow::setResult(bool result)
