@@ -3,31 +3,45 @@
     "version":1,
     "type":"object",
     "properties":{
-        "Source_Image_Info":{
+        "information":{
             "type":"object",
             "properties":{
-                "Image_name":{"type":"string"},
-                "Image_path":{"type":"string"},
-                "Resolution":{"type":"array", "items":{"type":"integer"}, "maxItems":2},
-                "Copyrighter":{"type":"string"},
-                "Time_zone":{"type":"string"},
-                "Location":{"type":"string"},
-                "GPS":{"type":"string"},
-                "Weather":{"type":"string"}
-            }
+                "filename":{"type":"string"},
+                "resolution":{"type":"array", "items":{"type":"integer"}, "maxItems":2}
+            },
+            "required":["filename", "resolution"]
         },
-        "Annotation":{
+        "Scene_meta":{
+            "type":"object",
+            "properties":{
+                "zone":{"type":"string"},
+                "edge_case":{"type":"array", "items":{"type":"string"}},
+                "scene_number":{"type":"string"}
+            },
+            "required":["zone","edge_case","scene_number"]
+        },
+        "Environmental_meta":{
+            "type":"object",
+            "properties":{
+                "weather":{"type":"string"},
+                "date":{"type":"string"},
+                "time":{"type":"string"},
+                "car_type":{"type":"string"},
+                "traffic_Type":{"type":"integer"},
+                "speed_type":{"type":"integer"},
+                "road_type":{"type":"string"}
+            },
+            "required":["weather", "date", "time", "car_Type", "traffic_Type","speed_type","road_type"]
+        },
+        "annotations":{
             "type":"array",
             "items":{
                 "type":"object",
                 "properties":{
-                    "Label":{"type":"string"},
-                    "Type":{"type":"string"},
-                    "bbox":{"type":"array", "items":{"type":"number"}, "maxItems":4},
-                    "area":{"type":"number"},
-                    "Coordinate":{"type":"array", "items":{"type":"array", "items":{"type":"number"}, "maxItems":2}},
-                    "Data_type":{"type":"string"}
-                }
+                    "polygon":{"type":"array", "items":{"type":"number"}},
+                    "class":{"type": "string"}
+                },
+                "required":["polygon", "class"]
             }
         }
     }

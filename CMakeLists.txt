@@ -32,13 +32,13 @@ include_directories(src src/resource src/forms src/headers src/sources)
 
 set(HEADERS
     src/headers/mainwindow.h
-    #src/headers/aboutwindow.h
+    src/headers/aboutwindow.h
     src/headers/jsonValidator.h
 )
 
 set(SOURCE_json-validator
     src/sources/mainwindow.cpp
-    #src/sources/aboutwindow.cpp
+    src/sources/aboutwindow.cpp
     src/sources/main.cpp 
     src/sources/jsonValidator.cpp
 )

@@ -27,21 +27,28 @@ public:
     ~JsonValidator();
 
     QDir top_qdir;
+    QDir result_qdir;
     QString top_dir;
+    QString result_dir;
     QStringList top_dir_list;
     QStringList whole_data_list;
     QStringList error_data_list;
+    QStringList error_data_path_list;
 
     int type = 0;
+    int whole_data_size = 0;
+    int whole_data_cnt = 0;
     void setOpen();
 
 private:
     rapidjson::Document mySchemaDoc;
     Schema mySchema;
     SchemaParser parser;
-    void getLine(std::string, int, int);
+    int getLine(std::string, int);
 
 signals:
+    void updateErrorList(QString);
+    void updateSlider(int);
     void sendResult(bool);
     void sendErrorRate(double);
 

@@ -4,11 +4,14 @@
 #include "ui_mainwindow.h"
 #include "jsonValidator.h"
 
+#include "aboutwindow.h"
+
 #include <string>
 
 #include <QMainWindow>
 #include <QObject>
 #include <QLabel>
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -34,8 +37,11 @@ private:
 
 private slots:
     void setOpen();
+    void setAbout();
     void setResult(bool);
     void setErrorRate(double);
     void setReset();
+    void updateSlider(int);
+    void updateErrorList(QString);
 };
 #endif // MAINWINDOW_H
