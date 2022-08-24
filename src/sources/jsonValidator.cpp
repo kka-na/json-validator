@@ -165,6 +165,8 @@ void JsonValidator::setStart()
     string result_path = string(result_dir.toLocal8Bit().constData()) + "/result.txt";
     ofstream writeFile;
     writeFile.open(result_path.c_str());
+    writeFile << top_dir.toLocal8Bit().constData() << " \n";
+    writeFile << "Whole Files : " << whole_data_size << " , Error Files : " << error_cnt << " \n";
     writeFile << "Error Rate : " << error_rate << " %\n";
     writeFile << "Checking Time : " << duration.count() << " msec \n";
 
