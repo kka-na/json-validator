@@ -51,4 +51,5 @@ make
 ## UI
 
 <p align="center">
-  <img width="800" src="./test/test3.gif">
+  [![JSON Validator Test Video](http://img.youtube.com/vi/l2LaRuJgu68/0.jpg)](https://youtu.be/l2LaRuJgu68) 
+</p>
