@@ -50,8 +50,4 @@ make
 
 ## UI
 
-<p align="center">
-
 [![JSON Validator Test Video](http://img.youtube.com/vi/l2LaRuJgu68/0.jpg)](https://youtu.be/l2LaRuJgu68)
-
-</p>
