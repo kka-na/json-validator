@@ -49,5 +49,9 @@ make
 ```
 
 ## UI
+<<<<<<< HEAD
 
 [![JSON Validator Test Video](http://img.youtube.com/vi/l2LaRuJgu68/0.jpg)](https://youtu.be/l2LaRuJgu68)
+=======
+  [![JSON Validator Test Video](http://img.youtube.com/vi/l2LaRuJgu68/0.jpg)](https://youtu.be/l2LaRuJgu68) 
+>>>>>>> fe1c12d980e65b5f7e1a48091fe92b1b4e13fd6f
