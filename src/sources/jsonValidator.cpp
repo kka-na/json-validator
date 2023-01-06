@@ -73,6 +73,86 @@ int JsonValidator::getLine(std::string path, int beg)
     return cnt;
 }
 
+string JsonValidator::getErrorValue(rapidjson::FileReadStream is, vector<string> context)
+{
+    rapidjson::Document doc;
+    doc.ParseStream(is);
+    string return_value = context.back();
+    if (doc.IsObject())
+    {
+        rapidjson::Value obj = doc.GetObject();
+        if (context.size() > 1)
+        {
+            for (int i = 1; i < int(context.size()); i++)
+            {
+                if (obj.HasMember(context[i].c_str()))
+                {
+                    if (obj[context[i].c_str()].IsObject())
+                    {
+                        obj = obj[context[i].c_str()].GetObject();
+                        return_value = context[i];
+                    }
+                    else if (obj[context[i].c_str()].IsArray())
+                    {
+                        if (i + 1 < int(context.size()))
+                        {
+                            int ccc = 0;
+                            for (auto &arr : obj[context[i].c_str()].GetArray())
+                            {
+                                if (ccc == stoi(context[i + 1]))
+                                {
+                                    if (arr.IsString())
+                                    {
+                                        return_value = arr.GetString();
+                                        break;
+                                    }
+                                    else if (arr.IsInt())
+                                    {
+                                        return_value = arr.GetInt();
+                                        break;
+                                    }
+                                    else if (arr.IsNumber())
+                                    {
+                                        return_value = arr.GetInt();
+                                        break;
+                                    }
+                                }
+                                ++ccc;
+                            }
+                        }
+                        else
+                        {
+                            return_value = context[i];
+                            break;
+                        }
+                    }
+                    else if (obj[context[i].c_str()].IsString())
+                    {
+                        return_value = obj[context[i].c_str()].GetString();
+                        break;
+                    }
+                    else if (obj[context[i].c_str()].IsInt())
+                    {
+                        return_value = obj[context[i].c_str()].GetInt();
+                        break;
+                    }
+                    else if (obj[context[i].c_str()].IsNumber())
+                    {
+                        return_value = obj[context[i].c_str()].GetInt();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        return return_value;
+    }
+
+    return return_value;
+}
+
 void JsonValidator::setStart()
 {
     Validator validator;
@@ -86,6 +166,9 @@ void JsonValidator::setStart()
         QDir data_qdir(data_dir);
         QStringList data_list = data_qdir.entryList(QStringList() << "*.json");
 
+        ofstream writeFile;
+        string whole_error_path = string(result_dir.toLocal8Bit().constData()) + "/" + string(data_qdir.dirName().toLocal8Bit().constData()) + "_error_report.csv";
+        cout << string(data_qdir.dirName().toLocal8Bit().constData()) << endl;
         for (int j = 0; j < data_list.size(); j++)
         {
             bool error_detected = false;
@@ -95,27 +178,30 @@ void JsonValidator::setStart()
             // If Target File Structure is Wrong,
             rapidjson::Document myTargetDoc;
             vector<string> load_result;
+
             if (!valijson::utils::loadDocument(cur_data_path, myTargetDoc, load_result))
             {
                 error_detected = true;
                 int pos = data_list.at(j).lastIndexOf(QChar('.'));
-                string err_result_path = string(result_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(j).left(pos)).toLocal8Bit().constData()) + "_error.txt";
 
-                ofstream writeFile;
-                writeFile.open(err_result_path.c_str());
+                writeFile.open(whole_error_path.c_str(), ios::app);
+
                 for (int k = 0; k < int(load_result.size()); k += 3)
                 {
-                    writeFile << "Error #" << load_result[k];
-                    writeFile << " at Line [ " << getLine(cur_data_path, stoi(load_result[k + 1])) << " ]\n";
-                    writeFile << load_result[k + 2] << "\n- Parse Error \n";
+                    writeFile << string((data_list.at(j).left(pos)).toLocal8Bit().constData()) << ", ";
+                    writeFile << getLine(cur_data_path, stoi(load_result[k + 1])) << " , ";
+                    writeFile << "구조 오류, ";
+                    writeFile << load_result[k + 2] << ", ";
+                    writeFile << load_errors[stoi(load_result[k])] << "\n";
                 }
 
-                writeFile.close();
                 status = false;
                 error_cnt += 1;
                 error_data_list << data_list.at(j);
                 error_data_path_list << data_qdir.filePath(data_list.at(j));
+                writeFile.close();
                 continue;
+                
             }
 
             // If Validation Failed,
@@ -123,39 +209,43 @@ void JsonValidator::setStart()
             ValidationResults err_results;
             if (!validator.validate(mySchema, myTargetAdapter, &err_results))
             {
+                FILE *fp = fopen(cur_data_path.c_str(), "rb");
+                char readBuffer[65536];
+                rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+                writeFile.open(whole_error_path.c_str(), ios::app);
                 error_detected = true;
                 int pos = cur_data_qpath.lastIndexOf(QChar('.'));
-                string err_result_path = string(result_dir.toLocal8Bit().constData()) + "/" + string((data_list.at(j).left(pos)).toLocal8Bit().constData()) + "_error.txt";
-
-                ofstream writeFile;
-                writeFile.open(err_result_path.c_str());
 
                 ValidationResults::Error error;
-                unsigned int errorNum = 1;
                 while (err_results.popError(error))
                 {
-                    writeFile << "Error #" << errorNum << "\n";
-                    writeFile << " ";
+                    writeFile << string((data_list.at(j).left(pos)).toLocal8Bit().constData()) << ", /";
+                    vector<string> context;
                     for (const string &contextElement : error.context)
                     {
-                        writeFile << contextElement << " ";
+                        writeFile << contextElement << "/";
+                        context.push_back(contextElement);
                     }
-                    writeFile << "\n";
-                    writeFile << "   - " << error.description << "\n";
-                    ++errorNum;
+                    writeFile << ", ";
+                    writeFile << "구문오류, ";
+                    writeFile << string(getErrorValue(is, context)) << ", ";
+                    writeFile << error.description << "\n";
                 }
 
-                writeFile.close();
                 status = false;
                 ++error_cnt;
                 error_data_list << data_list.at(j);
                 error_data_path_list << data_qdir.filePath(data_list.at(j));
+                fclose(fp);
+                writeFile.close();
             }
             if (error_detected)
                 emit updateErrorList(data_list.at(j));
             whole_data_cnt += 1;
             emit updateSlider(whole_data_cnt);
         }
+        
     }
 
     double error_rate = double(double(error_cnt) / double(whole_data_size)) * double(100);

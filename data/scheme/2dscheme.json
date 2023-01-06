@@ -14,8 +14,8 @@
         "Scene_meta":{
             "type":"object",
             "properties":{
-                "zone":{"type":"string"},
-                "edge_case":{"type":"array", "items":{"type":"string"}},
+                "zone":{"type":"string", "enum":["대구-테크노폴리스", "대구-국가산업단지", "울산-이예로", "세종-청사/시청 구간 (6-STOP)", "대구-화원 자동차전용도로", "Anyang, Smart square", "Pankyo, Techvalley to station", "KATRI, High speed circuit", "Sejong, Bigdata", "Ulsan, Jonggaro"]},
+                "edge_case":{"type":"array", "items":{"type":"string", "enum":["터널","차선 합류부", "차선 분류부", "대항차 전방 cutin 예측", "대항차 전방 정지", "선행차 전방 cutout 예측", "선행차 주행", "편향 주행", "차로 변경", "곡선 구간 차선 유지", "횡단보도", "과속방지턱", "회전 교차로 내 선입 차량 유무", "불법주차 회피", "교차로 직진", "횡단보도 내 보행자 인지 후 정차", "회전 교차로 주행 여부", "비보호 좌회전", "비보호 우회전", "신호등 정지신호", "신호등 출발신호", "신호등 좌회전신호", "점멸신호(노란색)", "점멸신호(빨간색)", "스쿨존 지역", "U턴", "음주운전단속", "포켓도로", "교량지역", "도로 제한 최고 속도 주행", "정속 주행 유지", "전방차량 주행불안", "고속 주행차량 패싱"]}},
                 "scene_number":{"type":"string"}
             },
             "required":["zone","edge_case","scene_number"]
@@ -23,13 +23,13 @@
         "Environmental_meta":{
             "type":"object",
             "properties":{
-                "weather":{"type":"string"},
+                "weather":{"type":"string", "enum":["맑음", "구름", "흐림"]},
                 "date":{"type":"string"},
                 "time":{"type":"string"},
-                "car_type":{"type":"string"},
-                "traffic_Type":{"type":"integer"},
-                "speed_type":{"type":"integer"},
-                "road_type":{"type":"string"}
+                "car_type":{"type":"string", "enum":["DN8", "G80"]},
+                "traffic_Type":{"type":"integer", "enum":[0,1,2]},
+                "speed_type":{"type":"integer", "enum":[0,1,2]},
+                "road_type":{"type":"string", "enum":["도심 2차로 이하", "도심 3차로 이상", "자동차전용도로"]}
             },
             "required":["weather", "date", "time", "car_Type", "traffic_Type","speed_type","road_type"]
         },
@@ -39,7 +39,7 @@
                 "type":"object",
                 "properties":{
                     "polygon":{"type":"array", "items":{"type":"number"}},
-                    "class":{"type": "string"}
+                    "class":{"type": "string", "enum":["vehicle", "bus", "truck", "otherCar", "motorcycle", "bicycle", "twoWheeler", "pedestrian", "rider", "freespace", "sideWalk", "crossWalk", "safetyZone", "speedBump", "roadMark", "whiteLane", "yellowLane", "blueLane", "redLane", "stopLane", "trafficSign", "trafficLight", "constructionGuide", "trafficDrum", "rubberCone", "warningTriangle", "fense", "policeCar", "ambulance", "schoolBus", "background", "eogVehicle","curb"]}
                 },
                 "required":["polygon", "class"]
             }

@@ -14,6 +14,11 @@
 #include <valijson/schema.hpp>
 #include <valijson/schema_parser.hpp>
 
+#include "rapidjson/document.h"
+#include <fstream>
+#include "rapidjson/filereadstream.h"
+#include <cstdio>
+
 using valijson::Schema;
 using valijson::SchemaParser;
 using valijson::adapters::RapidJsonAdapter;
@@ -45,6 +50,27 @@ private:
     Schema mySchema;
     SchemaParser parser;
     int getLine(std::string, int);
+    std::string getErrorValue(rapidjson::FileReadStream, std::vector<std::string>);
+
+    std::string load_errors[18] = {
+        "오류가 없습니다.",
+        "문서가 비어 있습니다.",
+        "문서 루트 뒤에 다른 값이 따라오면 안 됩니다.",
+        "잘못된 값.",
+        "개체 구성원의 이름이 없습니다.",
+        "개체 구성원의 이름 뒤에 콜론이 없습니다.",
+        "개체 구성원 뒤에 쉼표 또는 '}' 가 없습니다",
+        "배열 요소 뒤에 쉼표 또는 ']' 가 없습니다.",
+        "문자열에서 이스케이프 뒤에 잘못된 16진수가 있습니다.",
+        "문자열의 서로게이트 쌍이 잘못되었습니다.",
+        "문자열에 잘못된 이스케이프 문자가 있습니다.",
+        "문자열에 닫는 따옴표가 없습니다.",
+        "문자열의 인코딩이 잘못되었습니다.",
+        "더블에 저장하기에는 숫자가 너무 큽니다.",
+        "숫자의 미스 프랙션 부분.",
+        "숫자의 지수가 누락되었습니다.",
+        "구문 분석이 종료되었습니다.",
+        "불특정 구문 오류입니다."};
 
 signals:
     void updateErrorList(QString);

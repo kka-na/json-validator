@@ -1,0 +1,26 @@
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/result 
+Whole Files : 22 , Error Files : 22 
+Error Rate : 100 %
+Checking Time : 93216 msec 
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_01.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_02.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_03.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_04.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_05.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_06.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_07.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_08.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_09.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_10.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_11.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_12.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_13.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_14.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_15.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_16.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_27.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_28.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_29.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_30.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_31.json
+/home/kana/Documents/Project/json-validator/data/sample/scenario1/18_081320_220624/18_081320_220624_32.json
